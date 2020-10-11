@@ -1,4 +1,4 @@
-from ensamble import *
+from ensemble import *
 from mul_scale import multi_scale_Reso, mulinput_train_model, evaluate_mulinput_model
 from myFunctions import initialize_model
 import torch.nn as nn
