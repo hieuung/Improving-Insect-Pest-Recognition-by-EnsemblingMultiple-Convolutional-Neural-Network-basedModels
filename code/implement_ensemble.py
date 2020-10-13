@@ -85,22 +85,20 @@ if __name__ == "__main__":
     model2.to(device)
     print('Model loaded succesful')
     
-    model3 = initialize_model('fpn', num_classes= n_classes, pretrained= False)
+    model3, _ = initialize_model('fpn', num_classes= n_classes, pretrained= False)
     model3.load_state_dict(torch.load(path_weight_dict3, map_location= 'cpu'))
     model3.to(device)
     print('Model loaded succesful')
 
-    model4 = multi_scale_Reso(use_pretrained_bb= False, num_classes= n_classes, dropout= dropout)
+    model4, _ = initialize_model('multi-reso', n_classes, dropout= dropout, use_pretrained= False)
     model4.load_state_dict(torch.load(path_weight_dict4, map_location= 'cpu'))
     model4.to(device)
     print('Model loaded succesful')
     
-    sub_models = nn.ModuleList([model1, model2, model3,  model4])
+    sub_models = nn.ModuleList([model1, model2, model3, model4])
     sub_models_name = ['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso']
 
     model_ft = convGatingNetwork_Ensemble(sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
-
-    model_ft.to(device)
 
     if path_weight_dict:
         model_ft.load_state_dict(torch.load(path_weight_dict, map_location= 'cpu'))
