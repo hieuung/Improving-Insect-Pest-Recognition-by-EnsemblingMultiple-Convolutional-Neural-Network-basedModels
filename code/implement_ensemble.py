@@ -16,10 +16,12 @@ if __name__ == "__main__":
     num_epochs = 100
 
     # # My setting
-    init_lr = 1e-4
+    # init_lr = 1e-4
+    init_lr = 1e-2
     weight_decay = 0.00000
     dropout = 0.5
-    optimizer = 'Adam'
+    # optimizer = 'Adam'
+    optimizer = 'SGD'
     scheduler = 'expDecay'
 
     # model_name = 'ensamble_stacking'
