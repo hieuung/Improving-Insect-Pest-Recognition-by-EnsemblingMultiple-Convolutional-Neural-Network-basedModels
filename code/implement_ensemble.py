@@ -1,5 +1,5 @@
 from ensemble import *
-from mul_scale import multi_scale_Reso, mulinput_train_model, evaluate_mulinput_model
+from mul_scale import multi_scale_Reso, mulinput_train_model, evaluate_mulinput_model, mulinput_ImageFolder
 from myFunctions import initialize_model
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -93,9 +93,10 @@ if __name__ == "__main__":
     model4.to(device)
     print('Model loaded succesful')
     
-    sub_models = dict(zip(['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso'], [model1, model2, model3,  model4]))
+    sub_models = nn.ModuleList([model1, model2, model3,  model4])
+    sub_models_name = ['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso']
 
-    model_ft = convGatingNetwork_Ensemble(sub_models, num_classes= n_classes, dropout= dropout
+    model_ft = convGatingNetwork_Ensemble(sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
 
     model_ft.to(device)
 
@@ -105,7 +106,7 @@ if __name__ == "__main__":
     data_transforms = {
         'train': transforms.Compose([
             transforms.Resize(256),
-            transforms.CenterCrop(input_size)                
+            transforms.RandomCrop(input_size)                
         ]),
         'val': transforms.Compose([
             transforms.Resize(256),
@@ -113,11 +114,11 @@ if __name__ == "__main__":
         ]),
     }
 
-    train_set = mulscale_ImageFolder(root= 'train', transform= data_transforms['train'])
+    train_set = mulinput_ImageFolder(root= 'train', transform= data_transforms['train'])
     train_set = DataLoader(train_set, batch_size= batch_size, shuffle= True, 
                             num_workers= 8, pin_memory=True)
 
-    valid_set = mulscale_ImageFolder(root= 'valid', transform= data_transforms['val'])
+    valid_set = mulinput_ImageFolder(root= 'valid', transform= data_transforms['val'])
     valid_set = DataLoader(valid_set, batch_size= batch_size, shuffle= False, 
                             num_workers= 8, pin_memory= True)
     datasets_dict = {'train': train_set, 'val': valid_set}
@@ -155,7 +156,7 @@ if __name__ == "__main__":
 
 
     if is_eval:
-        test_set = mulscale_ImageFolder(root= 'test', transform= data_transforms['val'])
+        test_set = mulinput_ImageFolder(root= 'test', transform= data_transforms['val'])
         test_set = DataLoader(test_set, batch_size= batch_size, shuffle= False,
                         num_workers= 8, pin_memory= True)
                         

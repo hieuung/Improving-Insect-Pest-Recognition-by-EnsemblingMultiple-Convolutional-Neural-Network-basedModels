@@ -97,11 +97,12 @@ class mulinput_ImageFolder(ImageFolder):
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         """
-        path, target = self.samples[index]
+        path, target = self.imgs[index]
         sample = self.loader(path)
 
         if self.transform is not None:
             sample = self.transform(sample)
+            
         if self.target_transform is not None:
             target = self.target_transform(target)
 

@@ -1,6 +1,7 @@
 from myFunctions import *
 from mul_scale import mulinput_train_model, evaluate_mulinput_model, mulinput_ImageFolder
 # from data import *
+from torchvision.datasets import ImageFolder
 import torch.nn as nn
 import torch
 import matplotlib.pyplot as plt
@@ -105,7 +106,7 @@ if __name__ == "__main__":
         data_transforms = {
             'train': transforms.Compose([
                transforms.Resize(256),
-                transforms.CenterCrop(input_size),             
+                transforms.RandomCrop(input_size),             
                 transforms.ToTensor(),
                 transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
             ]),

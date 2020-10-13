@@ -254,7 +254,7 @@ def evaluate_model(model, testloader, path_weight_dict= None, device= 'cuda', mo
 
     model.eval()
     with torch.no_grad():
-        for data in testloader:
+        for data in Bar(testloader):
             images, labels = data
             images = images.to(device)
 

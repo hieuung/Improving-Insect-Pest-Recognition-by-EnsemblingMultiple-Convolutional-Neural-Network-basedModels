@@ -30,17 +30,18 @@ class stackedGeneralization_Ensemble(nn.Module):
 
 class convGatingNetwork_Ensemble(nn.Module):
     """Convoluional Gating Network ensemble model"""
-    def __init__(self, member_models, num_classes= 102, dropout= 0.5):
+    def __init__(self, member_models, member_models_name, num_classes= 102, dropout= 0.5):
         """Creates a Convoluional Gating Network ensemble model instance.
 
         Args:
-            member_models (dictionary): Dictionary of CNN experts.
+            member_models (nn.ModuleList): List of CNN experts.
+            member_models_name (Iterable): List of CNN expert's names
             num_classes (integer): Number of classes
             dropout (float): Dropout rate
         """
         super(convGatingNetwork_Ensemble, self).__init__()
-        self.member_models_name = list(member_models.keys())
-        self.member_models = list(member_models.values())
+        self.member_models_name = member_models_name
+        self.member_models = member_models
 
         for model in self.member_models:
             for param in model.parameters():
@@ -82,7 +83,7 @@ class convGatingNetwork_Ensemble(nn.Module):
             if name == "multi-reso":
                 members_out.append(F.softmax(model(x1, x2), dim= 1)) 
             else:
-                members_out.append(model(x1)) 
+                members_out.append(F.softmax(model(x1), dim= 1)) 
         
         members_out = torch.stack(members_out, 2)
 
