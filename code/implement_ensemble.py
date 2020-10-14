@@ -52,10 +52,10 @@ if __name__ == "__main__":
     ############################################################
 
     if is_train == False and load_checkpoint == True:
-        raise Exception('Error')
+        raise Exception('Error, train phase disabled')
 
     if is_train == False and is_plot_export_train_log == True:
-        raise Exception('Error')
+        raise Exception('Error, train phase disabled')
 
     if load_model and load_checkpoint:
         raise Exception('Error Don\'t load 2 as one')
@@ -95,10 +95,15 @@ if __name__ == "__main__":
     model4.to(device)
     print('Model loaded succesful')
     
+    gNet_Ft_extractor, input_size = initialize_model('resnet', n_classes, use_pretrained= False, dropout= dropout)
+    gNet_Ft_extractor.load_state_dict(torch.load(path_weight_dict1, map_location= 'cpu'))
+    gNet_Ft_extractor.to(device)
+    print('Model loaded succesful')
+
     sub_models = nn.ModuleList([model1, model2, model3, model4])
     sub_models_name = ['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso']
 
-    model_ft = convGatingNetwork_Ensemble(sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
+    model_ft = convGatingNetwork_Ensemble(gNet_Ft_extractor, sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
 
     if path_weight_dict:
         model_ft.load_state_dict(torch.load(path_weight_dict, map_location= 'cpu'))
@@ -125,6 +130,11 @@ if __name__ == "__main__":
 
     if is_train:
         model_ft = model_ft.to(device)
+
+        print("\nparam to learn:")
+        for name, para in model_ft.named_parameters():
+            if para.requires_grad == True:
+                print(name)
 
         params_to_update = model_ft.parameters()
 
