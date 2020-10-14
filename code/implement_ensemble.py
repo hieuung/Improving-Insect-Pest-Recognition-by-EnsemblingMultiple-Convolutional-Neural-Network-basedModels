@@ -95,7 +95,7 @@ if __name__ == "__main__":
     model4.to(device)
     print('Model loaded succesful')
     
-    gNet_Ft_extractor, input_size = initialize_model('resnet', n_classes, use_pretrained= False, dropout= dropout)
+    gNet_Ft_extractor, _ = initialize_model('resnet', n_classes, use_pretrained= False, dropout= dropout)
     gNet_Ft_extractor.load_state_dict(torch.load(path_weight_dict1, map_location= 'cpu'))
     gNet_Ft_extractor.to(device)
     print('Model loaded succesful')
