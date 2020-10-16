@@ -85,7 +85,7 @@ if __name__ == "__main__":
     model2.to(device)
     print('Model loaded succesful')
     
-    model3, _ = initialize_model('fpn', num_classes= n_classes, pretrained= False)
+    model3, _ = initialize_model('fpn', num_classes= n_classes, use_pretrained= False)
     model3.load_state_dict(torch.load(path_weight_dict3, map_location= 'cpu'))
     model3.to(device)
     print('Model loaded succesful')

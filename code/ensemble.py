@@ -69,9 +69,9 @@ class convGatingNetwork_Ensemble(nn.Module):
         members_out = [] #(?, n, n_classes,)
         for model, name in zip(self.member_models, self.member_models_name):
             if name == "multi-reso":
-                members_out.append(F.softmax(model(x1, x2), dim= 1)) 
+                members_out.append(model(x1, x2)) 
             else:
-                members_out.append(F.softmax(model(x1), dim= 1)) 
+                members_out.append(model(x1)) 
         
         members_out = torch.stack(members_out, 2)
 
