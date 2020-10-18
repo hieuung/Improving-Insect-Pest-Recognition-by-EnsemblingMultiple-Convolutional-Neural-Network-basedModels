@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     is_train = True # ENABLE TRAIN
     is_eval = True # ENABLE EVAL
-    save_model_dict = False # SAVE MODEL
+    save_model_dict = True # SAVE MODEL
     is_save_checkpoint = False # SAVE CHECKPOINT
     load_model = False # MUST HAVE MODEL FIRST
     is_plot_export_train_log = False # SAVE TRAIN LOG
