@@ -103,8 +103,6 @@ if __name__ == "__main__":
     # gNet_Ft_extractor.to(device)
     # print('Model loaded succesful')
     
-
-
     sub_models = nn.ModuleList([model1, model2, model3, model4])
     sub_models_name = ['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso']
 
