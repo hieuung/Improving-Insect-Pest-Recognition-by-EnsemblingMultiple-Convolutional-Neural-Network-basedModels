@@ -30,17 +30,17 @@ class stackedGeneralization_Ensemble(nn.Module):
 
 class convGatingNetwork(nn.Module):
     """Convoluional Gating Network"""
-    def __init__(self, num_classes= 102, dropout= 0.5):
+    def __init__(self, num_classes= 102, num_models=4, dropout= 0.5):
         """Creates a Convoluional Gating Network model instance.
 
         Args:
             num_classes (integer): Number of classes
             dropout (float): Dropout rate
         """
-        super(convGatingNetwork_Ensemble, self).__init__()
+        super(convGatingNetwork, self).__init__()
 
         self.num_classes = num_classes
-
+        self.n_models = num_models
         self.convBlock = nn.Sequential(
             nn.Conv2d(3, 32, kernel_size= 7, stride= 2, padding= 3, bias= False), #112
             nn.ReLU(inplace=True),

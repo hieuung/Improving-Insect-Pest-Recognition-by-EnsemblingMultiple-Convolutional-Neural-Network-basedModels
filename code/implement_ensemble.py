@@ -7,9 +7,11 @@ import torch
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import transforms
+import os
 
 if __name__ == "__main__":
     ###########################################################
+    os.environ['CUDA_VISIBLE_DEVICES'] = '3'
     device = 'cuda'
     n_classes = 102
     batch_size = 64
@@ -17,6 +19,7 @@ if __name__ == "__main__":
 
     # # My setting
     # init_lr = 1e-4
+    
     init_lr = 1e-2
     weight_decay = 0.00000
     dropout = 0.5
@@ -100,13 +103,14 @@ if __name__ == "__main__":
     # gNet_Ft_extractor.to(device)
     # print('Model loaded succesful')
     
-    gNet_Ft_extractor = convGatingNetwork(num_classes= n_classes)
+
 
     sub_models = nn.ModuleList([model1, model2, model3, model4])
     sub_models_name = ['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso']
 
-    model_ft = convGatingNetwork_Ensemble(gNet_Ft_extractor, features_extract= False, 
-    sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
+    gNet_Ft_extractor = convGatingNetwork(num_classes= n_classes, num_models=len(sub_models))
+    model_ft = convGatingNetwork_Ensemble(gNet_Ft_extractor, features_extract= False, member_models=sub_models, member_models_name=sub_models_name,
+                                        num_classes= n_classes, dropout= dropout)
 
     if path_weight_dict:
         model_ft.load_state_dict(torch.load(path_weight_dict, map_location= 'cpu'))
@@ -122,11 +126,11 @@ if __name__ == "__main__":
         ]),
     }
 
-    train_set = mulinput_ImageFolder(root= 'train', transform= data_transforms['train'])
+    train_set = mulinput_ImageFolder(root= '../train', transform= data_transforms['train'])
     train_set = DataLoader(train_set, batch_size= batch_size, shuffle= True, 
                             num_workers= 8, pin_memory=True)
 
-    valid_set = mulinput_ImageFolder(root= 'valid', transform= data_transforms['val'])
+    valid_set = mulinput_ImageFolder(root= '../valid', transform= data_transforms['val'])
     valid_set = DataLoader(valid_set, batch_size= batch_size, shuffle= False, 
                             num_workers= 8, pin_memory= True)
     datasets_dict = {'train': train_set, 'val': valid_set}
@@ -169,7 +173,7 @@ if __name__ == "__main__":
 
 
     if is_eval:
-        test_set = mulinput_ImageFolder(root= 'test', transform= data_transforms['val'])
+        test_set = mulinput_ImageFolder(root= '../test', transform= data_transforms['val'])
         test_set = DataLoader(test_set, batch_size= batch_size, shuffle= False,
                         num_workers= 8, pin_memory= True)
                         
