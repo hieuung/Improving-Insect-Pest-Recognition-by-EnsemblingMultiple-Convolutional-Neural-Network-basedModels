@@ -95,15 +95,18 @@ if __name__ == "__main__":
     model4.to(device)
     print('Model loaded succesful')
     
-    gNet_Ft_extractor, _ = initialize_model('resnet', n_classes, use_pretrained= False, dropout= dropout)
-    gNet_Ft_extractor.load_state_dict(torch.load(path_weight_dict1, map_location= 'cpu'))
-    gNet_Ft_extractor.to(device)
-    print('Model loaded succesful')
+    # gNet_Ft_extractor, _ = initialize_model('resnet', n_classes, use_pretrained= False, dropout= dropout)
+    # gNet_Ft_extractor.load_state_dict(torch.load(path_weight_dict1, map_location= 'cpu'))
+    # gNet_Ft_extractor.to(device)
+    # print('Model loaded succesful')
+    
+    gNet_Ft_extractor = convGatingNetwork(num_classes= n_classes)
 
     sub_models = nn.ModuleList([model1, model2, model3, model4])
     sub_models_name = ['Resnet50', 'Attention_res', 'Resnet_fpn', 'multi-reso']
 
-    model_ft = convGatingNetwork_Ensemble(gNet_Ft_extractor, sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
+    model_ft = convGatingNetwork_Ensemble(gNet_Ft_extractor, features_extract= False, 
+    sub_models, sub_models_name, num_classes= n_classes, dropout= dropout)
 
     if path_weight_dict:
         model_ft.load_state_dict(torch.load(path_weight_dict, map_location= 'cpu'))

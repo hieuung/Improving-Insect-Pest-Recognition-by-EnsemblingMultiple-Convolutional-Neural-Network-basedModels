@@ -28,15 +28,59 @@ class stackedGeneralization_Ensemble(nn.Module):
         ensamble_ouputs = self.fc(x)
         return ensamble_ouputs
 
+class convGatingNetwork(nn.Module):
+    """Convoluional Gating Network"""
+    def __init__(self, num_classes= 102, dropout= 0.5):
+        """Creates a Convoluional Gating Network model instance.
+
+        Args:
+            num_classes (integer): Number of classes
+            dropout (float): Dropout rate
+        """
+        super(convGatingNetwork_Ensemble, self).__init__()
+
+        self.num_classes = num_classes
+
+        self.convBlock = nn.Sequential(
+            nn.Conv2d(3, 32, kernel_size= 7, stride= 2, padding= 3, bias= False), #112
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(32),
+
+            nn.Conv2d(32, 64, kernel_size= 5, stride= 2, padding= 2, bias= False), #56
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(64),
+
+            nn.Conv2d(64, 128, kernel_size= 3, stride= 2, padding= 1, bias= False), #28
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(128),
+
+            nn.Conv2d(128, 128, kernel_size= 3, stride= 2, padding= 1, bias= False), #14
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(128),
+
+            nn.MaxPool2d(kernel_size= 2, stride= 2, padding= 1) #7
+        )
+
+        self.fc =  nn.Sequential(
+                    nn.Dropout(dropout),
+                    nn.Linear(7 * 7 * 128, self.n_models))
+
+    def forward(self, x):
+        x = self.convBlock(x)
+        x = torch.flatten(x, 1)
+        x = self.fc(x)
+        return x
+
 class convGatingNetwork_Ensemble(nn.Module):
     """Convoluional Gating Network ensemble model"""
-    def __init__(self, gNet_ft, member_models, member_models_name, num_classes= 102, dropout= 0.5):
+    def __init__(self, gNet_ft, features_extract, member_models, member_models_name, num_classes= 102, dropout= 0.5):
         """Creates a Convoluional Gating Network ensemble model instance.
 
         Args:
             member_models (nn.ModuleList): List of CNN experts.
             member_models_name (Iterable): List of CNN expert's names
-            features_extractor (nn.Module): Extractor for gating network
+            gNet_ft (nn.Module): Extractor for gating network
+            features_extract (bool): Train the whole gNet or the last dense layer
             num_classes (integer): Number of classes
             dropout (float): Dropout rate
         """
@@ -51,9 +95,10 @@ class convGatingNetwork_Ensemble(nn.Module):
 
         self.n_models = len(self.member_models)
         self.num_classes = num_classes
-
-        for param in self.gNet_ft.parameters():
-            param.requires_grad = False
+        
+        if features_extract:
+            for param in self.gNet_ft.parameters():
+                param.requires_grad = False
 
         num_fts = self.gNet_ft.fc[-1].in_features
 
