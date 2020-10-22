@@ -109,6 +109,9 @@ if __name__ == "__main__":
                                         is_inception= model_name == 'inception', checkpointFn= checkpoint
                                         , device= device, is_save_checkpoint= is_save_checkpoint
                                         ,is_load_checkpoint= load_checkpoint)
+
+    if save_model_dict:
+        torch.save(model_ft.state_dict(), model_name + '.pt')
     print("RESNET50 done")
 
     # # FPN
@@ -162,6 +165,8 @@ if __name__ == "__main__":
     #                                     is_inception= model_name == 'inception', checkpointFn= checkpoint
     #                                     , device= device, is_save_checkpoint= is_save_checkpoint
     #                                     ,is_load_checkpoint= load_checkpoint)
+    # if save_model_dict:
+    #     torch.save(model_ft.state_dict(), model_name + '.pt')
     # print("Feature Pyramid done")
 
     # # residual-attention
@@ -214,6 +219,8 @@ if __name__ == "__main__":
     #                                     is_inception= model_name == 'inception', checkpointFn= checkpoint
     #                                     , device= device, is_save_checkpoint= is_save_checkpoint
     #                                     ,is_load_checkpoint= load_checkpoint)
+    # if save_model_dict:
+    #     torch.save(model_ft.state_dict(), model_name + '.pt')
     # print("Residual-attention done")
 
     # # multi-reso
@@ -279,4 +286,6 @@ if __name__ == "__main__":
     #                                     is_inception= model_name == 'inception', checkpointFn= checkpoint
     #                                     , device= device, is_save_checkpoint= is_save_checkpoint
     #                                     ,is_load_checkpoint= load_checkpoint)
+    # if save_model_dict:
+    #     torch.save(model_ft.state_dict(), model_name + '.pt')
     # print("Multi-resolution done")
