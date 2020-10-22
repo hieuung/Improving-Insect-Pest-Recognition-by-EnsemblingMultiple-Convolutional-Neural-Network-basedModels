@@ -1,13 +1,17 @@
-from ensemble import *
+from ensamble import *
 from mul_scale import multi_scale_Reso, mulinput_train_model, evaluate_mulinput_model, mulinput_ImageFolder
 from myFunctions import initialize_model
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import torch
 import torch.optim as optim
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split, Subset
+from torchvision.datasets import ImageFolder
 from torchvision import transforms
+from sklearn.model_selection import train_test_split
+import numpy as np
 import os
+
 
 if __name__ == "__main__":
     ###########################################################

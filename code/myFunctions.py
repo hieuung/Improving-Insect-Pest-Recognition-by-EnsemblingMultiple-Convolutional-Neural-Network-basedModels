@@ -67,8 +67,13 @@ def train_model(model, dataloaders, criterion, optimizer, scheduler= None, num_e
             running_loss = 0.0
             running_corrects = 0
 
-            for inputs, labels in Bar(dataloaders[phase]):
-                inputs = inputs.to(device)
+            for data in Bar(dataloaders[phase]):
+                if len(data) > 2:
+                    inputs, _ , labels = data
+                    inputs = inputs.to(device)
+                else:
+                    inputs, labels = data
+                    inputs = inputs.to(device)
                 labels = labels.to(device)
 
                 optimizer.zero_grad()
