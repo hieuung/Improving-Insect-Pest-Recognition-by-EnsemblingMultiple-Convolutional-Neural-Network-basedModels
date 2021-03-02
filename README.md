@@ -3,9 +3,16 @@
 _Project discription ..._
 
 ## Requirement
-- All the requirement package are listed in requirements.txt.
-- To insall all the package, use the command:
-<pre><code>pip install -r requirements.txt</code></pre>
+- python 3.7.10
+- torch 1.7.1
+- numpy 1.19.5
+- matplotlib 3.2.2
+- TensorboardX 2.0
+- sklearn 0.22.2
+- skimage 0.16.2
+- imblearn 0.4.3
+- barbar
+
 ## Dataset
 In this work, we using two published datasets:
 - IP102 (proposed in https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_IP102_A_Large-Scale_Benchmark_Dataset_for_Insect_Pest_Recognition_CVPR_2019_paper.pdf)
