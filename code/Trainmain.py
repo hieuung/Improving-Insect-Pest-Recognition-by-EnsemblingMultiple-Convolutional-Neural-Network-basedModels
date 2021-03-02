@@ -155,13 +155,13 @@ if __name__ == "__main__":
     if save_model_dict:
         torch.save(model_ft.state_dict(), path_weight_dict)
 
-    
-    test_set = ImageFolder(root= test_root_path, transform= data_transforms['val'])
-    test_set = DataLoader(test_set, batch_size= batch_size, shuffle= False,
-                        num_workers= 8, pin_memory= True)
-                        
-    evaluate_model(model_ft, testloader= test_set, 
-                    path_weight_dict= None, device= device, model_hyper= model_hyper)
+    if is_eval:
+        test_set = ImageFolder(root= test_root_path, transform= data_transforms['val'])
+        test_set = DataLoader(test_set, batch_size= batch_size, shuffle= False,
+                            num_workers= 8, pin_memory= True)
+                            
+        evaluate_model(model_ft, testloader= test_set, 
+                        path_weight_dict= None, device= device, model_hyper= model_hyper)
 
     if is_train:
         train_acc = [h.cpu().numpy() for h in hist['train_acc']]

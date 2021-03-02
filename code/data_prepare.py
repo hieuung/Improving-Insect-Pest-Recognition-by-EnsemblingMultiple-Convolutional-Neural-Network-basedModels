@@ -9,7 +9,8 @@ def process_IP102(root):
     checklist = [0 for _ in range(len(necessaryFile))]
 
     for filename in os.listdir(root):
-        checklist[necessaryFile.index(filename)] = 1
+        if filename in necessaryFile:
+            checklist[necessaryFile.index(filename)] = 1
     if not all(checklist):
         listMissing = []
         for i, chk in enumerate(checklist):
@@ -37,7 +38,7 @@ def process_IP102(root):
             'valid' : validtxt}
 
     head = 'ip102_v1.1/images/'
-
+    #CREATE FOLDER .../IP102
     root_path_folder = os.path.join(os.getcwd(), 'IP102')
     if not os.path.exists(root_path_folder):
         os.makedirs(root_path_folder)
@@ -59,6 +60,7 @@ def process_IP102(root):
             else:
                 d_tarinfo[str(label)].append(tar.getmember(name))
 
+        #CREATE FOLDER /IP102/train (test, valid) 
         path_folder = os.path.join(root_path_folder, setname)
         if not os.path.exists(path_folder):
             os.makedirs(path_folder)
@@ -68,6 +70,7 @@ def process_IP102(root):
 
             ccount += 1
             path_class = os.path.join(path_folder, key)
+            #CREATE FOLDER /IP102/train (test, valid)/*spicies name*
             if not os.path.exists(path_class):
                 os.makedirs(path_class)
             tar.extractall(path_class, members= d_tarinfo[str(value)])

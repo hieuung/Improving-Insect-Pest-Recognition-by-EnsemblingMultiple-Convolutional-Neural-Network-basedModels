@@ -47,9 +47,6 @@ if __name__ == "__main__":
     , 'fpn' + '_' + dataset_name + '.pt')
 
     path_weight_dict4 = os.path.join(os.getcwd(), 'pre-trained'
-    , 'multi-reso' + '_' + dataset_name + '.pt')
-
-    path_weight_dict5 = os.path.join(os.getcwd(), 'pre-trained'
     , 'Fine-grained' + '_' + dataset_name + '.pt')
     ############################################################
 
@@ -69,7 +66,7 @@ if __name__ == "__main__":
     print('Model loaded succesful')
 
     model4 =  MainNet(proposalN=proposalN, num_classes= n_classes, channels=channels)
-    model4.load_state_dict(torch.load(path_weight_dict5, map_location= 'cpu'))
+    model4.load_state_dict(torch.load(path_weight_dict4, map_location= 'cpu'))
     model4.to(device)
     print('Model loaded succesful')
 
