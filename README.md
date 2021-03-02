@@ -15,17 +15,18 @@ _Project discription ..._
 
 ## Dataset
 In this work, we using two published datasets:
-- IP102 (proposed in https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_IP102_A_Large-Scale_Benchmark_Dataset_for_Insect_Pest_Recognition_CVPR_2019_paper.pdf)
-- D0 (proposed in https://www.sciencedirect.com/science/article/abs/pii/S0168169916308833). Download link https://www.dlearningapp.com/web/DLFautoinsects.htm
+- IP102 (proposed in https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_IP102_A_Large-Scale_Benchmark_Dataset_for_Insect_Pest_Recognition_CVPR_2019_paper.pdf). Contact the author to get this dataset.
+- D0 (proposed in https://www.sciencedirect.com/science/article/abs/pii/S0168169916308833). Download link https://www.dlearningapp.com/web/DLFautoinsects.htm.
 ## Usage
 To preproduct the result:
 - Download all requirement packages.
+- Main working directory must be "...\\Improving-Insect-Pest-Recognition-by-EnsemblingMultiple-Convolutional-Neural-Network-basedModels\\code".
 - Download dataset
 - Prepare the training data using command:
 <pre><code>py data_prepare.py -data IP102 -root ...\\ip102_v1.1-002</code></pre>
-_Note: Downloaded IP102's root folder directory must contained the archived .tar flie and .txt files of listing samples for training, validating,and testing. Created root folder for training will be placed in the same directory with this code_
+_Note: Downloaded IP102's root folder directory must contained the archived .tar flie and .txt files of listing samples for training, validating,and testing. Created root folder for training will be placed in the same directory with this code._
 <pre><code>py data_prepare.py -data D0 -root ...\\d0</code></pre>
-_Note: Downloaded D0's root folder must contained 40 archived .zip files. Created root folder for training will be placed in the same directory_
+_Note: Downloaded D0's root folder must contained 40 archived .zip files. Created root folder for training will be placed in the same directory with this code._
 - Training phase:
   - Training and Testing ResNet50
     <pre><code>python Trainmain.py -data IP102(or D0) -optim Adam -sch expdecay -l2 0.00001 -do 0.3 -predt True -mn resnet -lr 0.0001 -ep 100 -bz 64 -dv cuda</code></pre>
