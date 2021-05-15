@@ -55,7 +55,7 @@ if __name__ == "__main__":
     model1.to(device)
     print('Model loaded succesful')
 
-    model2, _ = initialize_model('residual-attention', n_classes, use_pretrained= False, dropout= dropout)
+    model2, _ = initialize_model('residual-attention', n_classes, use_pretrained= False)
     model2.load_state_dict(torch.load(path_weight_dict2, map_location= 'cpu'))
     model2.to(device)
     print('Model loaded succesful')
