@@ -1,4 +1,4 @@
-# Improving-Insect-Pest-Recognition-by-EnsemblingMultiple-Convolutional-Neural-Network-basedModels
+# An Efficient Insect Pest Classification Using Multiple Convolutional Neural Network Based Models
 
 _Project discription ..._
 
