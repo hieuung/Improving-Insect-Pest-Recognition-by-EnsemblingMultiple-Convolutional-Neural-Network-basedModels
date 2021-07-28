@@ -43,6 +43,6 @@ _Note: Downloaded D0's root folder must contained 40 archived .zip files. Create
 - Ensemble all models with soft voting
     <pre><code>python implement_ensemble.py -data IP102(or D0) -dv cuda</code></pre>
 ## Contact
-- ngtbinh@hcmus.edu.vn
-- ungtrunghieu99@gmail.com
-- ungquanghuy93@gmail.com
+- Nguyen Thanh Binh  (University of Science Ho Chi Minh city, ngtbinh@hcmus.edu.vn)
+- Ung Trung Hieu (ungtrunghieu99@gmail.com)
+- Ung Quang Huy (ungquanghuy93@gmail.com)
