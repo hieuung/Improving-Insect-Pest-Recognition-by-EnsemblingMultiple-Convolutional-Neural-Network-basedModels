@@ -1,7 +1,7 @@
 # An Efficient Insect Pest Classification Using Multiple Convolutional Neural Network Based Models
 
 ## Introduction
-_In this project, we implement many convolutional neural network-based models on insect pests recognition task. Including:  attention, feature
+_In this project, we implement many convolutional neural network-based models on insect pests recognition task. Including:  attention, feature
 pyramid network residual attention networks, and fine-grained models (MMAL-networks). We using an ensemble technique to combine our models to obtain the robust model.
 We test our proposed methods on 2 published datasets including IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition and D0. The experimental results show that combining these convolutional neural network-based models can better perform than the state-of-the-art methods on these two datasets. For instance, the highest accuracy we obtained on IP102 and D0 is 74.13% and 99.78%, respectively_
 
