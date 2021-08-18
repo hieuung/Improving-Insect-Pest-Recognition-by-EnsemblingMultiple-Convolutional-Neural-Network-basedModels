@@ -1,6 +1,11 @@
-# Improving-Insect-Pest-Recognition-by-EnsemblingMultiple-Convolutional-Neural-Network-basedModels
+# An Efficient Insect Pest Classification Using Multiple Convolutional Neural Network Based Models
 
-_Project discription ..._
+## Introduction
+In this project, we implement many convolutional neural network-based models on insect pests recognition task. Including:  attention, feature
+pyramid network residual attention networks, and fine-grained models (MMAL-networks). We using an ensemble technique to combine our models to obtain the robust model.
+We test our proposed methods on 2 published datasets including IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition and D0. The experimental results show that combining these convolutional neural network-based models can better perform than the state-of-the-art methods on these two datasets. For instance, the highest accuracy we obtained on IP102 and D0 is 74.13% and 99.78%, respectively_
+
+Our paper can be found at https://arxiv.org/abs/2107.12189 and under the submission to the journal Applied Intelligence.
 
 ## Requirement
 - python 3.7.10
@@ -40,3 +45,18 @@ _Note: Downloaded D0's root folder must contained 40 archived .zip files. Create
     <pre><code>python test.py -data IP102(or D0) -dv cuda</code></pre>
 - Ensemble all models with soft voting
     <pre><code>python implement_ensemble.py -data IP102(or D0) -dv cuda</code></pre>
+    
+## Contact
+- Nguyen Thanh Binh  (University of Science Ho Chi Minh city, ngtbinh@hcmus.edu.vn)
+- Ung Trung Hieu (ungtrunghieu99@gmail.com)
+- Ung Quang Huy (ungquanghuy93@gmail.com)
+
+## References
+<pre><code> @misc{ung2021efficient,
+      title={An Efficient Insect Pest Classification Using Multiple Convolutional Neural Network Based Models}, 
+      author={Hieu T. Ung and Huy Q. Ung and Binh T. Nguyen},
+      year={2021},
+      eprint={2107.12189},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}</code></pre>
