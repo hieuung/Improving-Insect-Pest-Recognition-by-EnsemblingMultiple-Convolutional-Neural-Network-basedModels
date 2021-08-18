@@ -406,7 +406,7 @@ def model_predict(model, dataloader, path_weight_dict= None, device= 'cuda', ret
                 else:
                     lables_out = torch.cat((lables_out, labels))
 
-        outputs = outputs.to('cpu')
+        outputs = torch.nn.functional.log_softmax(outputs.to('cpu'), dim=-1)
 
     if return_labels:
         return outputs, lables_out
@@ -427,7 +427,8 @@ def finegGrained_pred(model, testloader, device= 'cuda', return_labels= False):
             local_logits.to(device)
             raw_logits.to(device)
 
-            logits = (local_logits + raw_logits) / 2
+            logits = (torch.nn.functional.log_softmax(local_logits, dim=-1) 
+            + torch.nn.functional.log_softmax(raw_logits, dim=-1)) / 2
             logits.to(device)
 
             if outputs is None:
