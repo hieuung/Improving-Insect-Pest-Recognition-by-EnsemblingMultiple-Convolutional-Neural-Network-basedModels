@@ -82,8 +82,8 @@ if __name__ == '__main__':
             local_logits.to(device)
             raw_logits.to(device)
 
-            logits = (torch.nn.functional.log_softmax(local_logits, dim=-1) 
-            + torch.nn.functional.log_softmax(raw_logits, dim=-1)) / 2
+            logits = (torch.nn.functional.softmax(local_logits, dim=-1) 
+            + torch.nn.functional.softmax(raw_logits, dim=-1)) / 2
             logits.to(device)
 
             if outputs is None:
